@@ -10,7 +10,7 @@ class CalculateBMI {
   double _bmi;
 
   String calculate() {
-    double _bmi = weight / pow(height/100, 2);
+    _bmi = weight / pow(height/100, 2);
     return _bmi.toStringAsFixed(1);
   }
 
