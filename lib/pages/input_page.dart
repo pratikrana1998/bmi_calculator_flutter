@@ -1,9 +1,14 @@
+import 'package:bmi_calculator/calculate_bmi.dart';
+
+import 'results_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'constants.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_card.dart';
+import '../constants.dart';
+import '../components/bottom_bar.dart';
+import '../components/round_icon_button.dart';
 
 enum Gender {Male, Female}
 
@@ -189,41 +194,26 @@ class _InputPageState extends State<InputPage> {
               ),
             ],
           ),),
-          Container(
-            color: kBottomContainerColor,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomContainerHeight,
-          )
+          BottomBar(
+            buttonTitle: 'CALCULATE',
+            onTap: () {
+              CalculateBMI calc = CalculateBMI(height: height, weight: weight);
+
+              Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (context) => ResultsPage(
+                      bmiResult: calc.calculate(),
+                      resultText: calc.getResult(),
+                      interpretation: calc.getInterpretation(),
+                    ),
+                  ),
+              );
+            },
+          ),
         ],
       ),
     );
   }
 }
-
-class RoundIconButton extends StatelessWidget {
-
-  RoundIconButton({ @required this.icon, @required this.onPressed });
-
-  final IconData icon;
-  final Function onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      elevation: 6.0,
-      onPressed: onPressed,
-      constraints: BoxConstraints.tightFor(
-        width: 56.0,
-        height: 56.0,
-      ),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
-    );
-  }
-}
-
-
 
 
